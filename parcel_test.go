@@ -44,7 +44,6 @@ func TestAddGetDelete(t *testing.T) {
 	id, err := store.Add(parcel)
 	require.NoError(t, err, "Ошибка при добавлении посылки")
 	assert.True(t, id > 0, "Идентификатор должен быть больше нуля")
-	// assert.Equal(t, parcel, id, "Ошибка")
 
 	// get 	// получите только что добавленную посылку, убедитесь в отсутствии ошибки
 	// проверьте, что значения всех полей в полученном объекте совпадают со значениями полей в переменной parcel
@@ -143,8 +142,7 @@ func TestGetByClient(t *testing.T) {
 		parcelMap[id] = parcels[i]
 	}
 
-	// get by client
-	// получите список посылок по идентификатору клиента, сохранённого в переменной client
+	// get by client	// получите список посылок по идентификатору клиента, сохранённого в переменной client
 	storedParcels, err := store.GetByClient(client)
 	require.NoError(t, err, "Ошибка при получении посылок клиентом")
 	assert.Equal(t, len(parcels), len(storedParcels), "Количество полученных посылок должно совпадать с количеством добавленных посылок")

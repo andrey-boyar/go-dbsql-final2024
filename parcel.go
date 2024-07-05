@@ -38,7 +38,6 @@ func (s ParcelStore) Add(p Parcel) (int, error) {
 	// Проверка на дубликат
 	var exist int
 	err = s.db.QueryRow("SELECT 1 FROM parcel WHERE number = ?", p.Number).Scan(&exist)
-	//sql.Named("number", p.Number).Scan(&ex))
 	if err == nil {
 		return 0, fmt.Errorf("посылка с таким номером уже существует:%w", err)
 	}
@@ -69,7 +68,6 @@ func (s ParcelStore) Get(number int) (Parcel, error) {
 	if err != nil {
 		return Parcel{}, fmt.Errorf("не удалось отсканировать строку: %w", err)
 	}
-	// return p, nil
 	// заполните объект Parcel данными из таблицы
 	return p, nil
 }
