@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	// randSource источник псевдо случайных чисел.
+	// randSource источник псевдо-случайных чисел.
 	// Для повышения уникальности в качестве seed
 	// используется текущее время в unix формате (в виде числа)
 	randSource = rand.NewSource(time.Now().UnixNano())
@@ -40,18 +40,18 @@ func TestAddGetDelete(t *testing.T) {
 	store := NewParcelStore(db)
 	parcel := getTestParcel()
 
-	// add	// добавьте новую посылку в БД, убедитесь в отсутствии ошибки и наличии идентификатора
+	// add добавьте новую посылку в БД, убедитесь в отсутствии ошибки и наличии идентификатора
 	id, err := store.Add(parcel)
 	require.NoError(t, err, "Ошибка при добавлении посылки")
 	assert.True(t, id > 0, "Идентификатор должен быть больше нуля")
 
-	// get 	// получите только что добавленную посылку, убедитесь в отсутствии ошибки
+	// get получите только что добавленную посылку, убедитесь в отсутствии ошибки
 	// проверьте, что значения всех полей в полученном объекте совпадают со значениями полей в переменной parcel
 	retrievedParcel, err := store.Get(id)
 	require.NoError(t, err, "Ошибка при получении посылки")
 	assert.Equal(t, parcel, retrievedParcel, "Ошибка")
 
-	// delete	// удалите добавленную посылку, убедитесь в отсутствии ошибки
+	// delete удалите добавленную посылку, убедитесь в отсутствии ошибки
 	// проверьте, что посылку больше нельзя получить из БД
 	err = store.Delete(id)
 	require.NoError(t, err, "Ошибка при удалении посылки")
@@ -69,17 +69,17 @@ func TestSetAddress(t *testing.T) {
 	store := NewParcelStore(db)
 	parcel := getTestParcel()
 
-	// add 	// добавьте новую посылку в БД, убедитесь в отсутствии ошибки и наличии идентификатора
+	// add добавьте новую посылку в БД, убедитесь в отсутствии ошибки и наличии идентификатора
 	insertID, err := store.Add(parcel)
 	require.NoError(t, err, "Ошибка при добавлении посылки")
 	assert.True(t, insertID > 0, "Идентификатор должен быть больше нуля")
 
-	// set address	// обновите адрес, убедитесь в отсутствии ошибки
+	// set address обновите адрес, убедитесь в отсутствии ошибки
 	newAddress := "new test address"
 	err = store.SetAddress(insertID, newAddress)
 	require.NoError(t, err, "Ошибка установки адреса")
 
-	// check	// получите добавленную посылку и убедитесь, что адрес обновился
+	// check получите добавленную посылку и убедитесь, что адрес обновился
 	retrievedParcel, err := store.Get(insertID)
 	require.NoError(t, err, "Ошибка при получении посылки")
 	assert.Equal(t, newAddress, retrievedParcel.Address, "Адрес неправильный")
@@ -94,7 +94,7 @@ func TestSetStatus(t *testing.T) {
 	store := NewParcelStore(db)
 	parcel := getTestParcel()
 
-	// add	// добавьте новую посылку в БД, убедитесь в отсутствии ошибки и наличии идентификатора
+	// add добавьте новую посылку в БД, убедитесь в отсутствии ошибки и наличии идентификатора
 	insertID, err := store.Add(parcel)
 	require.NoError(t, err, "Ошибка при добавлении посылки")
 	assert.True(t, insertID > 0, "Идентификатор должен быть больше нуля")
@@ -103,7 +103,7 @@ func TestSetStatus(t *testing.T) {
 	err = store.SetStatus(insertID, ParcelStatusSent)
 	require.NoError(t, err, "Ошибка установки статуса")
 
-	// check	// получите добавленную посылку и убедитесь, что статус обновился
+	// check получите добавленную посылку и убедитесь, что статус обновился
 	retrievedParcel, err := store.Get(insertID)
 	require.NoError(t, err, "Ошибка при получении посылки")
 	assert.Equal(t, ParcelStatusSent, retrievedParcel.Status, "Статус не корректный")
@@ -142,7 +142,7 @@ func TestGetByClient(t *testing.T) {
 		parcelMap[id] = parcels[i]
 	}
 
-	// get by client	// получите список посылок по идентификатору клиента, сохранённого в переменной client
+	// get by client получите список посылок по идентификатору клиента, сохранённого в переменной client
 	storedParcels, err := store.GetByClient(client)
 	require.NoError(t, err, "Ошибка при получении посылок клиентом")
 	assert.Equal(t, len(parcels), len(storedParcels), "Количество полученных посылок должно совпадать с количеством добавленных посылок")
