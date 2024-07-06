@@ -15,16 +15,6 @@ func NewParcelStore(db *sql.DB) ParcelStore {
 
 func (s ParcelStore) Add(p Parcel) (int, error) {
 	// реализуйте добавление строки в таблицу parcel, используйте данные из переменной p
-	/*stmt, err := s.db.Prepare("INSERT INTO parcel (number, client, address, status) VALUES (:number, :client, :address, :status)")
-	if err != nil {
-		return 0, fmt.Errorf("Не удалось подготовить оператор вставки: %w", err)
-	}
-	defer stmt.Close()
-	// Выполните подготовленный оператор с данными о посылке
-	res, err := stmt.Exec(p.Number, p.Client, p.Address, p.Status)
-	if err != nil {
-		return 0, fmt.Errorf("не удалось выполнить оператор вставки: %w", err)
-	}*/
 	// Получите идентификатор новой вставленной записи
 	res, err := s.db.Exec("INSERT INTO parcel (number, client, address, status, created_at) VALUES (:number, :client, :address, :status, :created_at)",
 		sql.Named("number", p.Number),
@@ -104,8 +94,6 @@ func (s ParcelStore) GetByClient(client int) ([]Parcel, error) {
 	}
 	return parcell, nil
 	// заполните срез Parcel данными из таблицы
-	// var res []Parcel
-	// return res, nil
 }
 
 func (s ParcelStore) SetStatus(number int, status string) error {
