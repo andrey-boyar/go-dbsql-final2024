@@ -47,7 +47,6 @@ func (s ParcelStore) Add(p Parcel) (int, error) {
 	}
 	// верните идентификатор последней добавленной записи
 	return int(lastInsertID), nil
-	// return 0, nil
 }
 
 func (s ParcelStore) Get(number int) (Parcel, error) {
@@ -62,9 +61,8 @@ func (s ParcelStore) Get(number int) (Parcel, error) {
 	row := stmt.QueryRow(number)
 	// Создайте объект Parcel для хранения полученных данных
 	p := Parcel{}
-	// var p Parcel
 	// Сканируйте значения из строки в поля объекта Parcel
-	err = row.Scan(&p.Number, &p.Client, &p.Address, &p.Status, &p.CreatedAt) //&p.CreatedAt)
+	err = row.Scan(&p.Number, &p.Client, &p.Address, &p.Status, &p.CreatedAt)
 	if err != nil {
 		return Parcel{}, fmt.Errorf("не удалось отсканировать строку: %w", err)
 	}

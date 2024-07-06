@@ -63,7 +63,6 @@ func (s ParcelService) PrintClientParcels(client int) error {
 			parcel.Number, parcel.Address, parcel.Client, parcel.CreatedAt, parcel.Status)
 	}
 	fmt.Println()
-
 	return nil
 }
 
@@ -84,7 +83,6 @@ func (s ParcelService) NextStatus(number int) error {
 	}
 
 	fmt.Printf("У посылки № %d новый статус: %s\n", number, nextStatus)
-
 	return s.store.SetStatus(number, nextStatus)
 }
 
